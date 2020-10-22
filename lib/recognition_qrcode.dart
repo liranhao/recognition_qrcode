@@ -11,7 +11,7 @@ class RecognitionQrcode {
     return version;
   }
   // base64 || url || file path
-  static Future<Map> recognitionQrcode(dynamic img) async {
+  static Future<Map> recognition(dynamic img) async {
     var result = await _channel.invokeMethod('recognitionQrcode', img);
     return result;
   }

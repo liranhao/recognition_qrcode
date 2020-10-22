@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
                 // PickedFile value = await picker.getImage(
                 //     source: ImageSource
                 //         .gallery); //
-                RecognitionQrcode.recognitionQrcode(
+                RecognitionQrcode.recognition(
                         "https://tool.oschina.net/action/qrcode/generate?data=1231231231&output=image%2Fpng&error=L&type=0&margin=7&size=4.png")
                     .then((result) {
                   print("RecognitionQrcode: $result");
