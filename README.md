@@ -6,10 +6,9 @@
 
 ###使用方法
 ```
-RecognitionQrcode.recognitionQrcode(
-                        "https://tool.oschina.net/action/qrcode/generate?data=1231231231&output=image%2Fpng&error=L&type=0&margin=7&size=4.png")
-                    .then((result) {
-                  print("RecognitionQrcode: $result");
-                });
+RecognitionQrcode.recognition(
+                        "https://tool.oschina.net/action/qrcode/generate?data=1231231231&output=image%2Fpng&error=L&type=0&margin=7&size=4.png").then((result) {
+    print("recognition: $result");
+  });
 ```
 参数 img: 支持base64、url、filePath三种方式
