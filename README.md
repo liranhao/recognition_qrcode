@@ -1,15 +1,15 @@
 # recognition_qrcode
 
-A new flutter plugin project.
+识别图片中的二维码的flutter插件，简单好用
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
+###使用方法
+```
+RecognitionQrcode.recognitionQrcode(
+                        "https://tool.oschina.net/action/qrcode/generate?data=1231231231&output=image%2Fpng&error=L&type=0&margin=7&size=4.png")
+                    .then((result) {
+                  print("RecognitionQrcode: $result");
+                });
+```
+参数 img: 支持base64、url、filePath三种方式

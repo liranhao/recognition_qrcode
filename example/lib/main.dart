@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
                 //     source: ImageSource
                 //         .gallery); //
                 RecognitionQrcode.recognitionQrcode(
-                        "https://www.sf-express.com/resource/images/index/hk_suyuntong.jpg")
+                        "https://tool.oschina.net/action/qrcode/generate?data=1231231231&output=image%2Fpng&error=L&type=0&margin=7&size=4.png")
                     .then((result) {
                   print("RecognitionQrcode: $result");
                 });
