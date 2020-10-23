@@ -2,7 +2,7 @@
 //  NSData+Base64.m
 //  Runner
 //
-//  Created by 李然豪(LiRanHao)-顺丰科技 on 2020/10/19.
+//  Created by 李然豪(LiRanHao) on 2020/10/19.
 //
 #import "NSData+Base64.h"
 
