@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-// import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:recognition_qrcode/recognition_qrcode.dart';
 
 void main() {
@@ -55,12 +55,12 @@ class _MyAppState extends State<MyApp> {
           child: CupertinoButton(
               child: Text("识别图片"),
               onPressed: () async {
-                // final picker = ImagePicker();
-                // PickedFile value = await picker.getImage(
-                //     source: ImageSource
-                //         .gallery); //
+                final picker = ImagePicker();
+                PickedFile value = await picker.getImage(
+                    source: ImageSource
+                        .gallery); //
                 RecognitionQrcode.recognition(
-                        "https://tool.oschina.net/action/qrcode/generate?data=1231231231&output=image%2Fpng&error=L&type=0&margin=7&size=4.png")
+                        value.path)
                     .then((result) {
                   print("RecognitionQrcode: $result");
                 });
