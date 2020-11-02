@@ -140,10 +140,9 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
             if (bitmap != null) {
                 final Bitmap currentBitMap = bitmap;
                 new Thread(new Runnable() {
-                    Handler mainThread = new Handler(Looper.getMainLooper());
-
                     public void run() {
                         final String res = decodeImage(currentBitMap);
+                        Handler mainThread = new Handler(Looper.getMainLooper());
                         mainThread.post(new Runnable() {
                             @Override
                             public void run() {
@@ -155,11 +154,11 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
                                 } else {
                                     result.error("-1", "Image parsing failed", null);
                                 }
-                                return;
                             }
                         });
                     }
-                });
+                }).start();
+                return;
             }
             result.error("-2", "Image not found", null);
         } else {
