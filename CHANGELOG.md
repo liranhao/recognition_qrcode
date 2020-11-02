@@ -1,3 +1,3 @@
-## 0.0.2
+## 0.0.3
 
-* TODO: Describe initial release.
+* TODO: 修复安卓本地图片和base64图片识别code一直返回-2 问题
