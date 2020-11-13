@@ -16,8 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-
   @override
   void initState() {
     super.initState();
@@ -39,9 +37,7 @@ class _MyAppState extends State<MyApp> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+    setState(() {});
   }
 
   @override
@@ -56,12 +52,9 @@ class _MyAppState extends State<MyApp> {
               child: Text("识别图片"),
               onPressed: () async {
                 final picker = ImagePicker();
-                PickedFile value = await picker.getImage(
-                    source: ImageSource
-                        .gallery); //
-                RecognitionQrcode.recognition(
-                        value.path)
-                    .then((result) {
+                PickedFile value =
+                    await picker.getImage(source: ImageSource.gallery); //
+                RecognitionQrcode.recognition(value.path).then((result) {
                   print("RecognitionQrcode: $result");
                 });
               }),

@@ -1,21 +1,34 @@
 PODS:
   - Flutter (1.0.0)
+  - image_picker (0.0.1):
+    - Flutter
   - recognition_qrcode (0.0.1):
     - Flutter
+    - ZBarSDK
+  - ZBarSDK (1.3.1)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - recognition_qrcode (from `.symlinks/plugins/recognition_qrcode/ios`)
+
+SPEC REPOS:
+  trunk:
+    - ZBarSDK
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  image_picker:
+    :path: ".symlinks/plugins/image_picker/ios"
   recognition_qrcode:
     :path: ".symlinks/plugins/recognition_qrcode/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  recognition_qrcode: 244dab64ab757e03a381cbbf0e0b5817c533efcc
+  image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
+  recognition_qrcode: 913b65c64f900b91811b6191027f3d8267c99b5f
+  ZBarSDK: 4c1b5daeb7d6cc67dc9355e690af0230a661f6ec
 
 PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 
