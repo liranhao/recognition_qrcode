@@ -50,13 +50,13 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: CupertinoButton(
               child: Text("识别图片"),
-              onPressed: () async {
+              onPressed: () {
                 final picker = ImagePicker();
-                PickedFile value =
-                    await picker.getImage(source: ImageSource.gallery); //
-                RecognitionQrcode.recognition(value.path).then((result) {
-                  print("RecognitionQrcode: $result");
-                });
+                picker.getImage(source: ImageSource.gallery).then((value) {
+                  RecognitionQrcode.recognition(value.path).then((result) {
+                    print("RecognitionQrcode: $result");
+                  });
+                }); //
               }),
         ),
       ),

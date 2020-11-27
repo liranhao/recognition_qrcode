@@ -1,6 +1,5 @@
 
 #import "RecognitionQrcodePlugin.h"
-#import "ZBarSDK.h"
 @implementation RecognitionQrcodePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -32,20 +31,15 @@
             }
         }
         if(image){
-            ZBarReaderController *controller = [ZBarReaderController new];
-            
-            id<NSFastEnumeration> results = [controller scanImage:image.CGImage];
-            ZBarSymbol *symbol = nil;
-            
-            for (symbol in results) {
-                break;
-            }
-            
-            if (symbol.data) {
-                result(@{@"code": @"0", @"value": symbol.data});
+            CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
+                // 取得识别结果
+            NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
+            if (features.count == 0) {
+                result([FlutterError errorWithCode:@"-1" message:@"No results" details:nil]);
                 return;
             } else {
-                result([FlutterError errorWithCode:@"-1" message:@"No results" details:nil]);
+                CIQRCodeFeature *feature = [features objectAtIndex:0];
+                result(@{@"code": @"0", @"value": feature.messageString});
             }
         } else {
             result([FlutterError errorWithCode:@"-2" message:@"Image parsing failed" details:nil]);

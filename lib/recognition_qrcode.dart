@@ -10,6 +10,7 @@ class RecognitionQrcode {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
+
   // base64 || url || file path
   static Future<Map> recognition(dynamic img) async {
     var result = await _channel.invokeMethod('recognitionQrcode', img);
