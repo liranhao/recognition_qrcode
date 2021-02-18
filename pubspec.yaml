@@ -1,6 +1,6 @@
 name: recognition_qrcode
 description: The flutter plugin that identifies the QR code in the imagenflu.
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/liranhao/recognition_qrcode
 
 environment:
