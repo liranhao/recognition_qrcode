@@ -31,15 +31,25 @@
             }
         }
         if(image){
-            CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
-                // 取得识别结果
-            NSArray *features = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
+            UIImage * aImage = image;
+                ZBarReaderController *read = [ZBarReaderController new];
+                CGImageRef cgImageRef = aImage.CGImage;
+                ZBarSymbol* symbol = nil;
+                
+                NSMutableArray *array = [[NSMutableArray alloc]initWithCapacity:1];
+                
+                for(symbol in [read scanImage:cgImageRef]){
+                   
+                    NSString* strCode = symbol.data;
+                    [array addObject:strCode];
+                }
+            NSArray *features = array;
             if (features.count == 0) {
                 result([FlutterError errorWithCode:@"-1" message:@"No results" details:nil]);
                 return;
             } else {
-                CIQRCodeFeature *feature = [features objectAtIndex:0];
-                result(@{@"code": @"0", @"value": feature.messageString});
+                NSString* strCode = [features objectAtIndex:0];
+                result(@{@"code": @"0", @"value": strCode});
             }
         } else {
             result([FlutterError errorWithCode:@"-2" message:@"Image parsing failed" details:nil]);

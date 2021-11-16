@@ -5,3 +5,7 @@
 ## 0.0.7
 
 * TODO: add null safe
+
+## 1.0.1
+
+* TODO: 增加支持解析条形码
