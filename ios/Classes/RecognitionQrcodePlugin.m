@@ -1,5 +1,7 @@
 
 #import "RecognitionQrcodePlugin.h"
+
+#import "ZBarSDK.h"
 @implementation RecognitionQrcodePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel

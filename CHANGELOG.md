@@ -9,3 +9,7 @@
 ## 1.0.1
 
 * TODO: 增加支持解析条形码
+
+## 1.0.1+1
+
+* TODO: 修复：Include of non-modular header inside framework module
