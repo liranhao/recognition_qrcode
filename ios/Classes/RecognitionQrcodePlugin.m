@@ -34,17 +34,26 @@
         }
         if(image){
             UIImage * aImage = image;
-                ZBarReaderController *read = [ZBarReaderController new];
+            ZBarReaderController *read = [ZBarReaderController new];
+           
+            
+            NSMutableArray *array = [[NSMutableArray alloc]initWithCapacity:1];
+            
+            CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
+                // 取得识别结果
+            NSArray *detectorList = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
+            for(CIQRCodeFeature *feature in detectorList){
+                NSString* strCode = feature.messageString;
+                [array addObject:strCode];
+            }
+            if(array.count == 0 ){
                 CGImageRef cgImageRef = aImage.CGImage;
                 ZBarSymbol* symbol = nil;
-                
-                NSMutableArray *array = [[NSMutableArray alloc]initWithCapacity:1];
-                
                 for(symbol in [read scanImage:cgImageRef]){
-                   
                     NSString* strCode = symbol.data;
                     [array addObject:strCode];
                 }
+            }
             NSArray *features = array;
             if (features.count == 0) {
                 result([FlutterError errorWithCode:@"-1" message:@"No results" details:nil]);

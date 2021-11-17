@@ -13,3 +13,7 @@
 ## 1.0.1+1
 
 * TODO: 修复：Include of non-modular header inside framework module
+
+## 1.0.1+2
+
+* TODO: 增加双重识别，提升识别率
