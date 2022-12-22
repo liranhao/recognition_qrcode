@@ -171,10 +171,11 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
         int height = bitmap.getHeight();
         int[] pixels = new int[width * height];
         bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-        LuminanceSource source = new RGBLuminanceSource(width, height, pixels);
-        Binarizer binarizer = new HybridBinarizer(source);
-        BinaryBitmap binaryBitmap = new BinaryBitmap(binarizer);
         try {
+            LuminanceSource source = new RGBLuminanceSource(width, height, pixels);
+            Binarizer binarizer = new HybridBinarizer(source);
+            BinaryBitmap binaryBitmap = new BinaryBitmap(binarizer);
+        
             com.google.zxing.Result res = new MultiFormatReader().decode(binaryBitmap, HINTS);
             Log.d("ac", res.getText());
             return res.getText();
