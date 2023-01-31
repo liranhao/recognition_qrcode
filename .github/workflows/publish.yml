@@ -2,7 +2,7 @@ name: Publish to pub.dev
 
 on: push
 
-jjobs:
+jobs:
   publishing:
     runs-on: ubuntu-latest
     steps:
