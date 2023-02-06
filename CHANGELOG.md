@@ -1,27 +1,31 @@
 ## 0.0.6
 
-* TODO: 修复安卓7.0以下系统崩溃问题
+- TODO: 修复安卓 7.0 以下系统崩溃问题
 
 ## 0.0.7
 
-* TODO: add null safe
+- TODO: add null safe
 
 ## 1.0.1
 
-* TODO: 增加支持解析条形码
+- TODO: 增加支持解析条形码
 
 ## 1.0.1+1
 
-* TODO: 修复：Include of non-modular header inside framework module
+- TODO: 修复：Include of non-modular header inside framework module
 
 ## 1.0.1+2
 
-* TODO: 增加双重识别，提升识别率
+- TODO: 增加双重识别，提升识别率
 
 ## 1.0.1+3
 
-* TODO: 修复bug
+- TODO: 修复 bug
 
 ## 1.0.2
 
-* TODO: 修改版本号
+- TODO: 修改版本号
+
+## 1.0.2+1
+
+- TODO: 修改版本号
