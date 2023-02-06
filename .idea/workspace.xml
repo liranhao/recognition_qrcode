@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="6289f824-6844-4fdf-b759-da9dd84a94b1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recognition_qrcode.iml" beforeDir="false" afterPath="$PROJECT_DIR$/recognition_qrcode.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Nexus_One_API_23]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/01398010/.android/avd/Pixel_XL_API_29.avd]" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -25,6 +24,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
@@ -32,6 +33,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -44,51 +46,5 @@
       <updated>1603106891125</updated>
     </task>
     <servers />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="100" y="123" width="1240" height="591" key="AVDManager" timestamp="1613645517807">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state x="100" y="123" width="1240" height="591" key="AVDManager/0.23.1440.793/1440.-327.1920.1057@0.23.1440.793" timestamp="1613642270154" />
-    <state x="100" y="123" width="1240" height="591" key="AVDManager/0.23.1440.797/1440.-327.1920.1057@0.23.1440.797" timestamp="1613645517807" />
-    <state x="100" y="123" width="1240" height="591" key="AVDManager/0.23.1440.800/1440.-327.1920.1057@0.23.1440.800" timestamp="1613645443304" />
-    <state width="1398" height="223" key="GridCell.Tab.0.bottom" timestamp="1613645517729">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state width="1398" height="371" key="GridCell.Tab.0.bottom/0.23.1440.791/1440.-327.1920.1057@0.23.1440.791" timestamp="1606288401561" />
-    <state width="1398" height="223" key="GridCell.Tab.0.bottom/0.23.1440.797/1440.-327.1920.1057@0.23.1440.797" timestamp="1613645517729" />
-    <state width="1398" height="133" key="GridCell.Tab.0.bottom/0.23.1440.800/1440.-327.1920.1057@0.23.1440.800" timestamp="1613643434893" />
-    <state width="1398" height="223" key="GridCell.Tab.0.center" timestamp="1613645517726">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state width="1398" height="371" key="GridCell.Tab.0.center/0.23.1440.791/1440.-327.1920.1057@0.23.1440.791" timestamp="1606288401561" />
-    <state width="1398" height="223" key="GridCell.Tab.0.center/0.23.1440.797/1440.-327.1920.1057@0.23.1440.797" timestamp="1613645517726" />
-    <state width="1398" height="133" key="GridCell.Tab.0.center/0.23.1440.800/1440.-327.1920.1057@0.23.1440.800" timestamp="1613643434892" />
-    <state width="1398" height="223" key="GridCell.Tab.0.left" timestamp="1613645517726">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state width="1398" height="371" key="GridCell.Tab.0.left/0.23.1440.791/1440.-327.1920.1057@0.23.1440.791" timestamp="1606288401560" />
-    <state width="1398" height="223" key="GridCell.Tab.0.left/0.23.1440.797/1440.-327.1920.1057@0.23.1440.797" timestamp="1613645517726" />
-    <state width="1398" height="133" key="GridCell.Tab.0.left/0.23.1440.800/1440.-327.1920.1057@0.23.1440.800" timestamp="1613643434891" />
-    <state width="1398" height="223" key="GridCell.Tab.0.right" timestamp="1613645517727">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state width="1398" height="371" key="GridCell.Tab.0.right/0.23.1440.791/1440.-327.1920.1057@0.23.1440.791" timestamp="1606288401561" />
-    <state width="1398" height="223" key="GridCell.Tab.0.right/0.23.1440.797/1440.-327.1920.1057@0.23.1440.797" timestamp="1613645517727" />
-    <state width="1398" height="133" key="GridCell.Tab.0.right/0.23.1440.800/1440.-327.1920.1057@0.23.1440.800" timestamp="1613643434892" />
-    <state x="221" y="57" key="SettingsEditor" timestamp="1613644119672">
-      <screen x="0" y="23" width="1440" height="797" />
-    </state>
-    <state x="221" y="57" key="SettingsEditor/0.23.1440.793/1440.-327.1920.1057@0.23.1440.793" timestamp="1613642338502" />
-    <state x="221" y="57" key="SettingsEditor/0.23.1440.797/1440.-327.1920.1057@0.23.1440.797" timestamp="1613644119672" />
-    <state x="221" y="57" key="SettingsEditor/0.23.1440.800/1440.-327.1920.1057@0.23.1440.800" timestamp="1613643599166" />
-    <state x="100" y="123" width="1240" height="591" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1606287110896">
-      <screen x="0" y="23" width="1440" height="791" />
-    </state>
-    <state x="100" y="123" width="1240" height="591" key="com.android.tools.idea.avdmanager.AvdListDialog/0.23.1440.791/1440.-327.1920.1057@0.23.1440.791" timestamp="1606287110896" />
-    <state x="385" y="189" key="run.anything.popup" timestamp="1613642351959">
-      <screen x="0" y="23" width="1440" height="793" />
-    </state>
-    <state x="385" y="189" key="run.anything.popup/0.23.1440.793/1440.-327.1920.1057@0.23.1440.793" timestamp="1613642351959" />
   </component>
 </project>
