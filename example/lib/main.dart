@@ -43,7 +43,12 @@ class _MyAppState extends State<MyApp> {
               child: Text("识别图片"),
               onPressed: () {
                 final picker = ImagePicker();
-                picker.getImage(source: ImageSource.gallery).then((value) {
+                picker
+                    .pickImage(source: ImageSource.gallery)
+                    .then((XFile? value) {
+                  if (value == null) {
+                    return;
+                  }
                   RecognitionQrcode.recognition(value.path).then((result) {
                     print("RecognitionQrcode: $result");
                   });

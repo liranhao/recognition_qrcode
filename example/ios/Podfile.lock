@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - image_picker (0.0.1):
+  - image_picker_ios (0.0.1):
     - Flutter
   - LBXZBarSDK (1.3.5)
   - recognition_qrcode (0.0.1):
@@ -9,7 +9,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - recognition_qrcode (from `.symlinks/plugins/recognition_qrcode/ios`)
 
 SPEC REPOS:
@@ -19,17 +19,17 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  image_picker:
-    :path: ".symlinks/plugins/image_picker/ios"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
   recognition_qrcode:
     :path: ".symlinks/plugins/recognition_qrcode/ios"
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
+  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   LBXZBarSDK: db826d1265fbb4fbdbb2f30d7d1e96142e32bfff
   recognition_qrcode: 3c30ceb47e9b296f40db7cd3da6614cc39560c95
 
-PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
+PODFILE CHECKSUM: cf0c950f7e9a456b4e325f5b8fc0f98906a3705a
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3
