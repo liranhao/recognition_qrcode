@@ -6,7 +6,7 @@ description: Demonstrates how to use the recognition_qrcode plugin.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.12.0 <3.0.6"
+  sdk: ">=2.12.0 <=3.0.6"
 
 dependencies:
   flutter:
