@@ -38,8 +38,8 @@
     //计算image相对于ImageView的位置
     CGRect imgRect = [self calculateClientRectOfImageInUIImageView:_imgView];
     for(int i = 0; i < _barcodes.count; i ++){
-        MLKBarcode *barcode = [_barcodes objectAtIndex:i];
-        CGRect barcodeFrame = [self calculateBarcodeRect:imgRect barcodeRect:barcode.frame];
+        BarCodeObject *barcode = [_barcodes objectAtIndex:i];
+        CGRect barcodeFrame = [self calculateBarcodeRect:imgRect barcodeRect:barcode.bounds];
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         //计算二维码位置
         btn.frame = CGRectMake(barcodeFrame.origin.x + barcodeFrame.size.width / 2 - 15, barcodeFrame.origin.y + barcodeFrame.size.height / 2 -  15, 30, 30);
@@ -73,8 +73,8 @@
     [self.view addSubview:closeBtn];
 }
 - (void) clickBarCode:(UIButton *)btn{
-    MLKBarcode *barcode = [_barcodes objectAtIndex:btn.tag - 100];
-    self.clickBarCodeFinish(barcode.rawValue);
+    BarCodeObject *barcode = [_barcodes objectAtIndex:btn.tag - 100];
+    self.clickBarCodeFinish(barcode.value);
     [self dismissViewControllerAnimated:true completion:nil];
 }
 

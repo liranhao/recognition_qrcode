@@ -6,12 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GoogleMLKit/MLKit.h>
+#import "BarCodeObject.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ImageViewController : UIViewController
 @property(strong, nonatomic) UIImage *image;
-@property(strong, nonatomic) NSArray<MLKBarcode *>* barcodes;
+@property(strong, nonatomic) NSArray<BarCodeObject *>* barcodes;
 @property(copy, nonatomic) void (^clickBarCodeFinish)(NSString *value);
 @end
 
