@@ -1,0 +1,156 @@
+package com.recognition.qrcode.recognition_qrcode;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.shapes.Shape;
+import android.media.Image;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.Size;
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.zxing.Result;
+import com.google.zxing.ResultPoint;
+import com.google.zxing.multi.qrcode.QRCodeMultiReader;
+public class QRImageActivity extends Activity {
+    public static Bitmap image;
+    public static Result[] results;
+    private ImageView imageView;
+    private RelativeLayout rootView;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.qr_image);
+        rootView = findViewById(R.id.root_view);
+        imageView = findViewById(R.id.img_view);
+        imageView.setImageBitmap(QRImageActivity.image);
+        Button btn = findViewById(R.id.btn);
+        btn.setOnClickListener(new CancelClickListener(this));
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                initView();
+            }
+        });
+
+    }
+    private void initView(){
+
+        Result[] results = QRImageActivity.results;
+        QrRect imgRect = calculateClientRectOfImageInUIImageView();
+        for (int i = 0; i < results.length; i++) {
+            Result result = results[i];
+            QrRect qrRect = getQrRect(result.getResultPoints());
+            QrRect currentQrRect = calculateBarcodeRect(imgRect, qrRect);
+            ImageView icon = new ImageView(this);
+            icon.setOnClickListener(new BarcodeClickListener(this, result.getText()));
+//            icon.setImageResource(R.drawable.bx_right_arrow);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(Math.round(currentQrRect.width), Math.round(currentQrRect.height));
+            params.leftMargin = Math.round(currentQrRect.x + currentQrRect.width / 2 - 30);
+            params.topMargin = Math.round( currentQrRect.y + currentQrRect.height / 2 - 30);
+            icon.setBackgroundResource(R.drawable.img_view_normal);
+            icon.setLayoutParams(params);
+            rootView.addView(icon);
+        }
+//        rootView.addView();
+//        ImageView imageView1 = new ImageView();
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams();
+
+    }
+
+    private QrRect calculateClientRectOfImageInUIImageView(){
+        float scale = getScale();
+        float imgW = (float)QRImageActivity.image.getWidth() * scale;
+        float imgH = (float)QRImageActivity.image.getHeight() * scale;
+
+        float x = (float)(imageView.getWidth() - imgW) / 2;
+        float y = (float)(imageView.getHeight() - imgH) / 2;
+        QrRect rect = new QrRect( x, y, imgW, imgH);
+        return rect;
+    }
+    private float getScale(){
+        float scaleW  = (float)imageView.getWidth() / (float)QRImageActivity.image.getWidth();
+        float scaleH = (float)imageView.getHeight() / (float)QRImageActivity.image.getHeight();
+        Log.i("image.width", String.valueOf(QRImageActivity.image.getWidth()));
+        Log.i("imageView.width", String.valueOf(imageView.getWidth()));
+        float scale = Math.min(scaleH, scaleW);
+        return scale;
+    }
+    private QrRect getQrRect(ResultPoint[] points){
+        float minX = Float.POSITIVE_INFINITY, minY = Float.POSITIVE_INFINITY, maxX = 0, maxY = 0;
+        for (int i = 0; i < points.length; i++) {
+            ResultPoint point = points[i];
+            minX = Math.min(minX, point.getX());
+            minY = Math.min(minY, point.getY());
+            maxX = Math.max(maxX, point.getX());
+            maxY = Math.max(maxY, point.getY());
+        }
+        return new QrRect(minX, minY, maxX - minX, maxY - minY);
+    }
+
+    private QrRect calculateBarcodeRect(QrRect imgRect, QrRect barRect){
+        float aspect = getScale();
+        float x=  barRect.x * aspect + imgRect.x;
+        float y= barRect.y * aspect + imgRect.y;
+
+        float width = barRect.width * aspect;
+        float height = barRect.height * aspect;
+
+        return  new QrRect(x,y,width,height);
+    }
+}
+class CancelClickListener implements View.OnClickListener{
+    Activity activity;
+    CancelClickListener(final Activity activity){
+        this.activity = activity;
+    }
+    @Override
+    public void onClick(View view) {
+        activity.finish();
+    }
+}
+class BarcodeClickListener implements View.OnClickListener{
+    Activity activity;
+    String value;
+    BarcodeClickListener(final Activity activity,
+    final String value){
+        this.activity = activity;
+        this.value = value;
+    }
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(value);
+        intent.putExtra("value", value);
+        activity.setResult(1, intent);
+        activity.finish();
+    }
+}
+class QrRect{
+    float x;
+    float y;
+     float width;
+     float height;
+    QrRect(float x,
+        float y,
+        float width,
+        float height){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+}

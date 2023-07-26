@@ -51,6 +51,8 @@ class _MyAppState extends State<MyApp> {
                   }
                   RecognitionQrcode.recognition(value.path).then((result) {
                     print("RecognitionQrcode: $result");
+                  }).catchError((onError) {
+                    print("catchError:$onError");
                   });
                 }); //
               }),
