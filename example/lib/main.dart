@@ -28,8 +28,12 @@ class _MyAppState extends State<MyApp> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
     RecognitionQrcode.config(
-        // icon: "assets/bx-right-arrow.png",
-        );
+      // icon: "assets/bx-right-arrow.png",
+      iconWidth: 30,
+      iconHeight: 30,
+      cancelTitleFontSize: 16,
+      cancelTitle: "取消",
+    );
     setState(() {});
   }
 
