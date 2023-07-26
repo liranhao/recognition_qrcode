@@ -136,6 +136,9 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
     public void onMethodCall(@NonNull MethodCall call, @NonNull final Result result) {
         if (call.method.equals("getPlatformVersion")) {
             result.success("Android " + android.os.Build.VERSION.RELEASE);
+        } else if (call.method.equals("setConfig")) {
+            RecognitionConfig config = RecognitionConfig.getInstance();
+            config.setConfig((Map) call.arguments);
         } else if (call.method.equals("recognitionQrcode")) {
             final String arguments = call.arguments.toString();
             Bitmap bitmap = null;

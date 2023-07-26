@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -22,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.zxing.BinaryBitmap;
 import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.multi.qrcode.QRCodeMultiReader;
@@ -30,7 +32,7 @@ public class QRImageActivity extends Activity {
     public static Result[] results;
     private ImageView imageView;
     private RelativeLayout rootView;
-
+    private RecognitionConfig config;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,13 @@ public class QRImageActivity extends Activity {
         imageView = findViewById(R.id.img_view);
         imageView.setImageBitmap(QRImageActivity.image);
         Button btn = findViewById(R.id.btn);
+        config = RecognitionConfig.getInstance();
+        if(config.cancelTitle != null){
+            btn.setText(config.cancelTitle);
+        }
+        if(config.cancelTitleFontSize > 0){
+            btn.setTextSize((float) config.cancelTitleFontSize);
+        }
         btn.setOnClickListener(new CancelClickListener(this));
         rootView.post(new Runnable() {
             @Override
@@ -52,17 +61,29 @@ public class QRImageActivity extends Activity {
 
         Result[] results = QRImageActivity.results;
         QrRect imgRect = calculateClientRectOfImageInUIImageView();
+        Bitmap iconBitMap = null;
+        try {
+            iconBitMap = BitmapFactory.decodeByteArray(config.icon,0 ,config.icon.length);
+        } catch (Throwable ex){
+
+        }
         for (int i = 0; i < results.length; i++) {
             Result result = results[i];
             QrRect qrRect = getQrRect(result.getResultPoints());
             QrRect currentQrRect = calculateBarcodeRect(imgRect, qrRect);
             ImageView icon = new ImageView(this);
             icon.setOnClickListener(new BarcodeClickListener(this, result.getText()));
-            icon.setImageResource(R.drawable.bx_right_arrow);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(60, 60);
-            params.leftMargin = Math.round(currentQrRect.x + currentQrRect.width / 2 - 30);
-            params.topMargin = Math.round( currentQrRect.y + currentQrRect.height / 2 - 30);
-            icon.setBackgroundResource(R.drawable.img_view_normal);
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)Math.round(config.iconWidth * 2), (int)Math.round(config.iconHeight * 2));
+            params.leftMargin = (int) Math.round(currentQrRect.x + currentQrRect.width / 2 - config.iconWidth);
+            params.topMargin = (int) Math.round( currentQrRect.y + currentQrRect.height / 2 - config.iconHeight);
+            if(iconBitMap != null){
+                icon.setImageBitmap(iconBitMap);
+            } else {
+                icon.setBackgroundResource(R.drawable.img_view_normal);
+                icon.setImageResource(R.drawable.bx_right_arrow);
+            }
+
             icon.setLayoutParams(params);
             rootView.addView(icon);
         }

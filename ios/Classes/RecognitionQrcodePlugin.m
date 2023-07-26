@@ -3,6 +3,7 @@
 #import "ImageViewController.h"
 #import "ZBarSDK.h"
 #import "BarCodeObject.h"
+#import "RecognitionConfig.h"
 //#import <GoogleMLKit/MLKit.h>
 @implementation RecognitionQrcodePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -16,7 +17,9 @@
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([@"getPlatformVersion" isEqualToString:call.method]) {
         result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
-    }else if([@"recognitionQrcode" isEqualToString: call.method]){
+    } else if([call.method isEqualToString:@"setConfig"]){
+        [RecognitionConfig.shareInstance setConfig:call.arguments];
+    } else if([@"recognitionQrcode" isEqualToString: call.method]){
         id arguments = call.arguments;
         UIImage *image;
         if([arguments isKindOfClass: [UIImage class]]){

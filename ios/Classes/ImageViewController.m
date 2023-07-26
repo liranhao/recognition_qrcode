@@ -6,7 +6,7 @@
 //
 
 #import "ImageViewController.h"
-
+#import "RecognitionConfig.h"
 @interface ImageViewController ()
 {
     UIImageView *_imgView; //展示视图
@@ -37,19 +37,23 @@
     [self.view addSubview:maskView];
     //计算image相对于ImageView的位置
     CGRect imgRect = [self calculateClientRectOfImageInUIImageView:_imgView];
+    RecognitionConfig *config = RecognitionConfig.shareInstance;
     for(int i = 0; i < _barcodes.count; i ++){
         BarCodeObject *barcode = [_barcodes objectAtIndex:i];
         CGRect barcodeFrame = [self calculateBarcodeRect:imgRect barcodeRect:barcode.bounds];
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         //计算二维码位置
-        btn.frame = CGRectMake(barcodeFrame.origin.x + barcodeFrame.size.width / 2 - 15, barcodeFrame.origin.y + barcodeFrame.size.height / 2 -  15, 30, 30);
-        btn.backgroundColor = UIColor.whiteColor;
-        btn.layer.cornerRadius = 15;
-        btn.layer.masksToBounds = true;
-        [btn setImage:[UIImage imageNamed:@"bx-right-arrow"] forState:UIControlStateNormal];
-//        [btn setTitle:@"好的" forState:UIControlStateNormal];
+        btn.frame = CGRectMake(barcodeFrame.origin.x + barcodeFrame.size.width / 2 - config.iconWidth / 2, barcodeFrame.origin.y + barcodeFrame.size.height / 2 -  config.iconHeight / 2, config.iconWidth, config.iconHeight);
+        
+        if(config.icon){
+            [btn setImage:[UIImage imageWithData:config.icon.data] forState:UIControlStateNormal];
+        } else {
+            btn.layer.cornerRadius = config.iconHeight / 2;
+            btn.layer.masksToBounds = true;
+            [btn setImage:[UIImage imageNamed:@"bx-right-arrow"] forState:UIControlStateNormal];
+            btn.backgroundColor = UIColor.whiteColor;
+        }
         btn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [btn setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
         btn.tag = 100 + i;
         [btn addTarget:self action:@selector(clickBarCode:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:btn];
@@ -65,8 +69,12 @@
         height = [[UIApplication sharedApplication] statusBarFrame].size.height;
     }
     closeBtn.frame = CGRectMake(20, height, 0, 40);
-    [closeBtn setTitle:@"取消" forState: UIControlStateNormal];
-    closeBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    if(config.cancelTitle){
+        [closeBtn setTitle:config.cancelTitle forState: UIControlStateNormal];
+    } else {
+        [closeBtn setTitle:@"取消" forState: UIControlStateNormal];
+    }
+    closeBtn.titleLabel.font = [UIFont systemFontOfSize:config.cancelTitleFontSize];
     [closeBtn sizeToFit];
     [closeBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(btnClose) forControlEvents:UIControlEventTouchUpInside];
