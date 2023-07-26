@@ -58,8 +58,8 @@ public class QRImageActivity extends Activity {
             QrRect currentQrRect = calculateBarcodeRect(imgRect, qrRect);
             ImageView icon = new ImageView(this);
             icon.setOnClickListener(new BarcodeClickListener(this, result.getText()));
-//            icon.setImageResource(R.drawable.bx_right_arrow);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(Math.round(currentQrRect.width), Math.round(currentQrRect.height));
+            icon.setImageResource(R.drawable.bx_right_arrow);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(60, 60);
             params.leftMargin = Math.round(currentQrRect.x + currentQrRect.width / 2 - 30);
             params.topMargin = Math.round( currentQrRect.y + currentQrRect.height / 2 - 30);
             icon.setBackgroundResource(R.drawable.img_view_normal);
