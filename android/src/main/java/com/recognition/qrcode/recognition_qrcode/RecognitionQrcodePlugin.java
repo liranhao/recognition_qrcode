@@ -53,7 +53,7 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
     private MethodChannel channel;
     private static final int TIME_OUT = 30000;
     private Activity currentActivity;
-    private ActivityPluginBinding binding;
+    private QrCodeActivityResultListener listener;
     public static final Map<DecodeHintType, Object> HINTS = new EnumMap<>(DecodeHintType.class);
     static {
         List<BarcodeFormat> allFormats = new ArrayList<>();
@@ -91,7 +91,8 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         this.currentActivity = binding.getActivity();
-        this.binding = binding;
+        listener = new QrCodeActivityResultListener();
+        binding.addActivityResultListener(listener);
 
     }
 
@@ -173,7 +174,7 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
         }
     }
     public void handleResults(final Bitmap bitmap, @NonNull final Result result){
-        binding.addActivityResultListener(new QrCodeActivityResultListener(result));
+        listener.currentResult = result;
         new Thread(new Runnable() {
             public void run() {
                 final com.google.zxing.Result[] res = decodeImage(bitmap);
@@ -256,9 +257,8 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
 }
 
 class  QrCodeActivityResultListener implements PluginRegistry.ActivityResultListener {
-    private Result currentResult;
-    QrCodeActivityResultListener(final Result result ){
-        this.currentResult = result;
+    public Result currentResult;
+    QrCodeActivityResultListener( ){
     }
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
