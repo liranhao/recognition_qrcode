@@ -3,7 +3,7 @@
 识别图片中的二维码的flutter插件，简单好用
  ![](./demo.gif)
 ## Getting Started
-Android 采用zxing框架，iOS采用ZBarSDK框架，支持识别条形码、二维码等，支持识别包含多个二维码的图片
+采用GoogleMLKit框架，支持识别条形码、二维码等，支持识别包含多个二维码的图片
 ### 使用方法
 ```
 //如果使用默认配置可以不配置config
@@ -20,6 +20,3 @@ RecognitionQrcode.recognition(
     print("recognition: $result");
   });
 ```
-
-#### <font color="#FFD877">提示!</font>
-<font color="#FFD877">如果图片中包含多个条形码，则只会返回第一个结果，如果图片中包含二维码和条形码，则只能识别二维码</font>

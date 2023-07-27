@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.recognition.qrcode.example">
    <application
         android:label="example"
@@ -31,4 +32,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <uses-sdk tools:overrideLibrary="com.google.mlkit:barcode-scanning"/>
 </manifest>

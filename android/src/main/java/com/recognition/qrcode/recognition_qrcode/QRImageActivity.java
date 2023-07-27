@@ -23,13 +23,12 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.Result;
-import com.google.zxing.ResultPoint;
-import com.google.zxing.multi.qrcode.QRCodeMultiReader;
+import com.google.mlkit.vision.barcode.Barcode;
+import java.util.List;
+
 public class QRImageActivity extends Activity {
     public static Bitmap image;
-    public static Result[] results;
+    public static List<Barcode> results;
     private ImageView imageView;
     private RelativeLayout rootView;
     private RecognitionConfig config;
@@ -59,7 +58,7 @@ public class QRImageActivity extends Activity {
     }
     private void initView(){
 
-        Result[] results = QRImageActivity.results;
+        List<Barcode> results = QRImageActivity.results;
         QrRect imgRect = calculateClientRectOfImageInUIImageView();
         Bitmap iconBitMap = null;
         try {
@@ -67,12 +66,13 @@ public class QRImageActivity extends Activity {
         } catch (Throwable ex){
 
         }
-        for (int i = 0; i < results.length; i++) {
-            Result result = results[i];
-            QrRect qrRect = getQrRect(result.getResultPoints());
+        for (int i = 0; i < results.size(); i++) {
+            Barcode result = results.get(i);
+            Rect rect = result.getBoundingBox();
+            QrRect qrRect = new QrRect(rect.left, rect.top,rect.width(), rect.height()) ;
             QrRect currentQrRect = calculateBarcodeRect(imgRect, qrRect);
             ImageView icon = new ImageView(this);
-            icon.setOnClickListener(new BarcodeClickListener(this, result.getText()));
+            icon.setOnClickListener(new BarcodeClickListener(this, result.getRawValue()));
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)Math.round(config.iconWidth * 2), (int)Math.round(config.iconHeight * 2));
             params.leftMargin = (int) Math.round(currentQrRect.x + currentQrRect.width / 2 - config.iconWidth);
@@ -110,17 +110,6 @@ public class QRImageActivity extends Activity {
         Log.i("imageView.width", String.valueOf(imageView.getWidth()));
         float scale = Math.min(scaleH, scaleW);
         return scale;
-    }
-    private QrRect getQrRect(ResultPoint[] points){
-        float minX = Float.POSITIVE_INFINITY, minY = Float.POSITIVE_INFINITY, maxX = 0, maxY = 0;
-        for (int i = 0; i < points.length; i++) {
-            ResultPoint point = points[i];
-            minX = Math.min(minX, point.getX());
-            minY = Math.min(minY, point.getY());
-            maxX = Math.max(maxX, point.getX());
-            maxY = Math.max(maxY, point.getY());
-        }
-        return new QrRect(minX, minY, maxX - minX, maxY - minY);
     }
 
     private QrRect calculateBarcodeRect(QrRect imgRect, QrRect barRect){
