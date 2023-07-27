@@ -14,10 +14,12 @@
       cancelTitleFontSize: 16, // 右上角取消按钮文字大小
       cancelTitle: "取消",// 右上角取消按钮文字
   );
-  
+//参数 img: 支持base64、url、filePath三种方式
 RecognitionQrcode.recognition(
                         "https://tool.oschina.net/action/qrcode/generate?data=1231231231&output=image%2Fpng&error=L&type=0&margin=7&size=4.png").then((result) {
     print("recognition: $result");
   });
 ```
-参数 img: 支持base64、url、filePath三种方式
+
+#### <font color="#FFD877">提示!</font>
+<font color="#FFD877">如果图片中包含多个条形码，则只会返回第一个结果，如果图片中包含二维码和条形码，则只能识别二维码</font>
