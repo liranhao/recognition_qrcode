@@ -1,7 +1,7 @@
 package com.recognition.qrcode.recognition_qrcode;
 
 import androidx.annotation.NonNull;
-
+import android.app.Activity;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,72 +13,72 @@ import java.util.Map;
 
 import io.flutter.Log;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
+import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Base64;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.Binarizer;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.DecodeHintType;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.RGBLuminanceSource;
-import com.google.zxing.common.GlobalHistogramBinarizer;
-import com.google.zxing.common.HybridBinarizer;
-
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.mlkit.vision.barcode.Barcode;
+import com.google.mlkit.vision.barcode.BarcodeScanner;
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.common.InputImage;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 /**
  * RecognitionQrcodePlugin
  */
-public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler {
+public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
     private MethodChannel channel;
     private static final int TIME_OUT = 30000;
-    public static final Map<DecodeHintType, Object> HINTS = new EnumMap<>(DecodeHintType.class);
-
-    static {
-        List<BarcodeFormat> allFormats = new ArrayList<>();
-        allFormats.add(BarcodeFormat.AZTEC);
-        allFormats.add(BarcodeFormat.CODABAR);
-        allFormats.add(BarcodeFormat.CODE_39);
-        allFormats.add(BarcodeFormat.CODE_93);
-        allFormats.add(BarcodeFormat.CODE_128);
-        allFormats.add(BarcodeFormat.DATA_MATRIX);
-        allFormats.add(BarcodeFormat.EAN_8);
-        allFormats.add(BarcodeFormat.EAN_13);
-        allFormats.add(BarcodeFormat.ITF);
-        allFormats.add(BarcodeFormat.MAXICODE);
-        allFormats.add(BarcodeFormat.PDF_417);
-        allFormats.add(BarcodeFormat.QR_CODE);
-        allFormats.add(BarcodeFormat.RSS_14);
-        allFormats.add(BarcodeFormat.RSS_EXPANDED);
-        allFormats.add(BarcodeFormat.UPC_A);
-        allFormats.add(BarcodeFormat.UPC_E);
-        allFormats.add(BarcodeFormat.UPC_EAN_EXTENSION);
-        HINTS.put(DecodeHintType.TRY_HARDER, BarcodeFormat.QR_CODE);
-        HINTS.put(DecodeHintType.POSSIBLE_FORMATS, allFormats);
-        HINTS.put(DecodeHintType.CHARACTER_SET, "utf-8");
-//        HINTS.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
-//        //复杂模式
-//        HINTS.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
-    }
+    private Activity currentActivity;
+    private QrCodeActivityResultListener listener;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
         channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "recognition_qrcode");
         channel.setMethodCallHandler(this);
+    }
+
+    @Override
+    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        this.currentActivity = binding.getActivity();
+        listener = new QrCodeActivityResultListener();
+        binding.addActivityResultListener(listener);
+
+    }
+
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+
+    }
+
+    @Override
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        this.currentActivity = binding.getActivity();
+
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+
     }
 
     // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -91,36 +91,32 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
     // depending on the user's project. onAttachedToEngine or registerWith must both be defined
     // in the same class.
     public static void registerWith(Registrar registrar) {
+        if(registrar.activity() == null){
+            return;
+        }
+        RecognitionQrcodePlugin plugin = new RecognitionQrcodePlugin();
+        plugin.currentActivity = registrar.activity();
+
         final MethodChannel channel = new MethodChannel(registrar.messenger(), "recognition_qrcode");
-        channel.setMethodCallHandler(new RecognitionQrcodePlugin());
+        channel.setMethodCallHandler(plugin);
+//        registrar.addActivityResultListener(new QrCodeActivityResultListener(currentResult));
     }
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull final Result result) {
         if (call.method.equals("getPlatformVersion")) {
             result.success("Android " + android.os.Build.VERSION.RELEASE);
+        } else if (call.method.equals("setConfig")) {
+            RecognitionConfig config = RecognitionConfig.getInstance();
+            config.setConfig((Map) call.arguments);
         } else if (call.method.equals("recognitionQrcode")) {
             final String arguments = call.arguments.toString();
             Bitmap bitmap = null;
             if (arguments.contains("http://") || arguments.contains("https://")) {
                 new Thread(new Runnable() {
                     public void run() {
-                        Bitmap map = getBitmap(arguments);
-                        final String res = decodeImage(map);
-                        Handler mainThread = new Handler(Looper.getMainLooper());
-                        mainThread.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (res != null) {
-                                    Map hashMap = new HashMap();
-                                    hashMap.put("value", res);
-                                    hashMap.put("code", "0");
-                                    result.success(hashMap);
-                                } else {
-                                    result.error("-1", "Image parsing failed", null);
-                                }
-                            }
-                        });
+                        Bitmap bitmap = getBitmap(arguments);
+                        handleResults(bitmap, result);
                     }
                 }).start();
                 return;
@@ -138,26 +134,7 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
                 }
             }
             if (bitmap != null) {
-                final Bitmap currentBitMap = bitmap;
-                new Thread(new Runnable() {
-                    public void run() {
-                        final String res = decodeImage(currentBitMap);
-                        Handler mainThread = new Handler(Looper.getMainLooper());
-                        mainThread.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (res != null) {
-                                    Map hashMap = new HashMap();
-                                    hashMap.put("value", res);
-                                    hashMap.put("code", "0");
-                                    result.success(hashMap);
-                                } else {
-                                    result.error("-1", "Image parsing failed", null);
-                                }
-                            }
-                        });
-                    }
-                }).start();
+                handleResults(bitmap, result);
                 return;
             }
             result.error("-2", "Image not found", null);
@@ -165,30 +142,49 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
             result.notImplemented();
         }
     }
+    public void handleResults(final Bitmap bitmap, @NonNull final Result result){
+        listener.currentResult = result;
+        final BarcodeScannerOptions options =
+                new BarcodeScannerOptions.Builder()
+                        .setBarcodeFormats(
+                                Barcode.FORMAT_ALL_FORMATS)
+                        .build();
+        BarcodeScanner scanner = BarcodeScanning.getClient();
+        InputImage image = InputImage.fromBitmap(bitmap, 0);
+        scanner.process(image)
+                .addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
+                    @Override
+                    public void onSuccess(List<Barcode> barcodes) {
+                        // Task completed successfully
+                        // ...
+                        if (barcodes.size() == 1) {
+                            final Barcode result1 = barcodes.get(0);
+                            Map hashMap = new HashMap();
+                            hashMap.put("value", result1.getRawValue());
+                            hashMap.put("code", "0");
+                            result.success(hashMap);
+                        } else if (barcodes.size() > 1) {
+                            QRImageActivity.image = bitmap;
+                            QRImageActivity.results = barcodes;
+                            Intent intent = new Intent(currentActivity, QRImageActivity.class);
+                            currentActivity.startActivityForResult(intent, 0);
+                        } else {
+                            result.error("-1", "Image parsing failed", null);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Task failed with an exception
+                        // ...
 
-    public String decodeImage(Bitmap bitmap) {
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-        int[] pixels = new int[width * height];
-        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-        LuminanceSource source = new RGBLuminanceSource(width, height, pixels);
-        try {
-            Binarizer binarizer = new HybridBinarizer(source);
-            BinaryBitmap binaryBitmap = new BinaryBitmap(binarizer);
-        
-            com.google.zxing.Result res = new MultiFormatReader().decode(binaryBitmap, HINTS);
-            Log.d("ac", res.getText());
-            return res.getText();
-        } catch (NotFoundException e) {
-            try {
-                com.google.zxing.Result res = new MultiFormatReader().decode(new BinaryBitmap(new GlobalHistogramBinarizer(source)), HINTS);
-                return res.getText();
-            } catch (NotFoundException e1) {
-                e1.printStackTrace();
-            }
-            return null;
-        }
+                    }
+                });
     }
+
+
+
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
@@ -213,5 +209,22 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
         } catch (Throwable ex) {
             return null;
         }
+    }
+}
+
+class  QrCodeActivityResultListener implements PluginRegistry.ActivityResultListener {
+    public Result currentResult;
+    QrCodeActivityResultListener( ){
+    }
+    @Override
+    public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode,resultCode, data);
+        if(currentResult != null && data != null && resultCode == 1){
+            Map hashMap = new HashMap();
+            hashMap.put("value", data.getStringExtra("value"));
+            hashMap.put("code", "0");
+            currentResult.success(hashMap);
+        }
+        return false;
     }
 }

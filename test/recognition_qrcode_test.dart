@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await RecognitionQrcode.platformVersion, '42');
+    expect(await RecognitionManager.platformVersion, '42');
   });
 }

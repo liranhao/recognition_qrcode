@@ -1,7 +1,8 @@
 
 #import "RecognitionQrcodePlugin.h"
-
-#import "ZBarSDK.h"
+#import "ImageViewController.h"
+#import "RecognitionConfig.h"
+#import <GoogleMLKit/MLKit.h>
 @implementation RecognitionQrcodePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -14,7 +15,9 @@
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     if ([@"getPlatformVersion" isEqualToString:call.method]) {
         result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
-    }else if([@"recognitionQrcode" isEqualToString: call.method]){
+    } else if([call.method isEqualToString:@"setConfig"]){
+        [RecognitionConfig.shareInstance setConfig:call.arguments];
+    } else if([@"recognitionQrcode" isEqualToString: call.method]){
         id arguments = call.arguments;
         UIImage *image;
         if([arguments isKindOfClass: [UIImage class]]){
@@ -33,35 +36,7 @@
             }
         }
         if(image){
-            UIImage * aImage = image;
-            ZBarReaderController *read = [ZBarReaderController new];
-           
-            
-            NSMutableArray *array = [[NSMutableArray alloc]initWithCapacity:1];
-            
-            CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
-                // 取得识别结果
-            NSArray *detectorList = [detector featuresInImage:[CIImage imageWithCGImage:image.CGImage]];
-            for(CIQRCodeFeature *feature in detectorList){
-                NSString* strCode = feature.messageString;
-                [array addObject:strCode];
-            }
-            if(array.count == 0 ){
-                CGImageRef cgImageRef = aImage.CGImage;
-                ZBarSymbol* symbol = nil;
-                for(symbol in [read scanImage:cgImageRef]){
-                    NSString* strCode = symbol.data;
-                    [array addObject:strCode];
-                }
-            }
-            NSArray *features = array;
-            if (features.count == 0) {
-                result([FlutterError errorWithCode:@"-1" message:@"No results" details:nil]);
-                return;
-            } else {
-                NSString* strCode = [features objectAtIndex:0];
-                result(@{@"code": @"0", @"value": strCode});
-            }
+            [self recognitionImage:image result:result];
         } else {
             result([FlutterError errorWithCode:@"-2" message:@"Image parsing failed" details:nil]);
         }
@@ -70,4 +45,42 @@
     }
 }
 
+
+- (void) recognitionImage:(UIImage *)image result:(FlutterResult)result{
+    
+    MLKBarcodeScannerOptions *options =
+      [[MLKBarcodeScannerOptions alloc]
+       initWithFormats: MLKBarcodeFormatAll];
+    
+    MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
+    visionImage.orientation = image.imageOrientation;
+    MLKBarcodeScanner *barcodeScanner = [MLKBarcodeScanner barcodeScannerWithOptions: options];
+    [barcodeScanner processImage:visionImage
+                      completion:^(NSArray<MLKBarcode *> *_Nullable barcodes,
+                                   NSError *_Nullable error) {
+    if (error != nil) {
+    // Error handling
+        result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", (long)error.code]  message:error.description details:nil]);
+        return;
+    }
+    if(barcodes.count == 0){
+        result(@{@"code": @"-1"});
+    }else if (barcodes.count == 1){
+        MLKBarcode *barcode = [barcodes objectAtIndex:0];
+        result(@{@"code": @"0", @"value": barcode.rawValue});
+    } else if (barcodes.count > 0) {
+          UIViewController *controller = [UIApplication sharedApplication].delegate.window.rootViewController;
+          ImageViewController *viewController = [[ImageViewController alloc] init];
+          viewController.image = image;
+          viewController.barcodes = barcodes;
+          //解析结果回调
+          viewController.clickBarCodeFinish = ^(NSString * _Nonnull value){
+              result(@{@"code": @"0", @"value": value});
+          };
+          viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+          [controller presentViewController:viewController animated:true completion:nil];
+      }
+    }];
+}
 @end
+
