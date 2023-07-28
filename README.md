@@ -3,7 +3,7 @@
 识别图片中的二维码的flutter插件，简单好用
  ![](./demo.gif)
 ## Getting Started
-采用GoogleMLKit框架，支持识别条形码、二维码等，支持识别包含多个二维码的图片
+采用GoogleMLKit框架，支持识别条形码、二维码等，支持识别包含多个二维码、条形码的图片
 ### 使用方法
 ```
 //如果使用默认配置可以不配置config
@@ -20,3 +20,4 @@ RecognitionQrcode.recognition(
     print("recognition: $result");
   });
 ```
+由于googleMLKit的原因，不支持iOS模拟器上运行
