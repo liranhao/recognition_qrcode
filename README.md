@@ -12,6 +12,7 @@ $ flutter pub add recognition_qrcode
 ```
 dependencies:
   recognition_qrcode: ^2.0.0
+```
 
 ```
 import 'package:recognition_qrcode/recognition_qrcode.dart';
