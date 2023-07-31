@@ -18,6 +18,8 @@
 RecognitionQrcode.recognition(
                         "https://tool.oschina.net/action/qrcode/generate?data=1231231231&output=image%2Fpng&error=L&type=0&margin=7&size=4.png").then((result) {
     print("recognition: $result");
-  });
+  }).catchError((onError) {
+    print("catchError:$onError");
+});
 ```
 由于googleMLKit的原因，不支持iOS模拟器上运行
