@@ -6,6 +6,16 @@
 采用GoogleMLKit框架，支持识别条形码、二维码等，支持识别包含多个二维码、条形码的图片
 ### 使用方法
 ```
+$ flutter pub add recognition_qrcode
+```
+或者：
+```
+dependencies:
+  recognition_qrcode: ^2.0.0
+
+```
+import 'package:recognition_qrcode/recognition_qrcode.dart';
+
 //如果使用默认配置可以不配置config
  RecognitionQrcode.config(
       // icon: "assets/bx-right-arrow.png", //箭头图标: 传路径
