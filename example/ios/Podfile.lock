@@ -92,14 +92,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/recognition_qrcode/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
   GoogleUtilities: c63691989bf362ba0505507da00eeb326192e83e
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
-  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
+  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   LBXZBarSDK: db826d1265fbb4fbdbb2f30d7d1e96142e32bfff
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
@@ -111,4 +111,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cf0c950f7e9a456b4e325f5b8fc0f98906a3705a
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.15.2
