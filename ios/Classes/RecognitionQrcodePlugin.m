@@ -36,6 +36,7 @@
             }
         }
         if(image){
+            image = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:UIImageOrientationUp];
             [self recognitionImage:image result:result];
         } else {
             result([FlutterError errorWithCode:@"-2" message:@"Image parsing failed" details:nil]);

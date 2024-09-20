@@ -47,3 +47,8 @@
 ## 2.0.2
 
 - TODO: 适配新版本SDK
+
+
+## 2.0.3
+
+- TODO: iOS图片imageOrientation错误问题修复
