@@ -52,3 +52,7 @@
 ## 2.0.3
 
 - TODO: iOS图片imageOrientation错误问题修复
+
+## 2.0.4
+
+- TODO: 支持版本修改
