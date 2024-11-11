@@ -16,7 +16,7 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.resources = ['Classes/*.png']
+  s.resources = ['Images/*.png']
   s.dependency 'LBXZBarSDK'
   s.dependency  'GoogleMLKit/BarcodeScanning'
   s.platform = :ios, '8.0'

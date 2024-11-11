@@ -107,7 +107,7 @@ SPEC CHECKSUMS:
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  recognition_qrcode: f83f9d61176362d6e546657ff63a36efb7f2b9a2
+  recognition_qrcode: 1c22cd2fd9fe23d70818ff00d3322e56376c754a
 
 PODFILE CHECKSUM: cf0c950f7e9a456b4e325f5b8fc0f98906a3705a
 

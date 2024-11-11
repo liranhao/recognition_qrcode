@@ -2,7 +2,11 @@
 #import "RecognitionQrcodePlugin.h"
 #import "ImageViewController.h"
 #import "RecognitionConfig.h"
+#if TARGET_IPHONE_SIMULATOR
+
+#else
 #import <GoogleMLKit/MLKit.h>
+#endif
 @implementation RecognitionQrcodePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
     FlutterMethodChannel* channel = [FlutterMethodChannel
@@ -37,7 +41,11 @@
         }
         if(image){
             image = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:UIImageOrientationUp];
+#if TARGET_IPHONE_SIMULATOR
+            result([FlutterError errorWithCode:@"-3" message:@"Please run this feature on a real device." details:nil]);
+#else
             [self recognitionImage:image result:result];
+#endif
         } else {
             result([FlutterError errorWithCode:@"-2" message:@"Image parsing failed" details:nil]);
         }
@@ -48,7 +56,9 @@
 
 
 - (void) recognitionImage:(UIImage *)image result:(FlutterResult)result{
-    
+#if TARGET_IPHONE_SIMULATOR
+
+#else
     MLKBarcodeScannerOptions *options =
       [[MLKBarcodeScannerOptions alloc]
        initWithFormats: MLKBarcodeFormatAll];
@@ -82,6 +92,7 @@
           [controller presentViewController:viewController animated:true completion:nil];
       }
     }];
+#endif
 }
 @end
 
