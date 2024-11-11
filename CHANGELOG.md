@@ -56,3 +56,7 @@
 ## 2.0.4
 
 - TODO: 支持版本修改
+
+## 2.0.5
+
+- TODO: 支持模拟器运行（Support simulator run.）

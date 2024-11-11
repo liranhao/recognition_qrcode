@@ -33,4 +33,4 @@ RecognitionQrcode.recognition(
     print("catchError:$onError");
 });
 ```
-由于googleMLKit的原因，不支持iOS模拟器上运行
+由于googleMLKit的原因，iOS模拟器上运行不支持识别图片
