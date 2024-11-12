@@ -32,7 +32,6 @@ PODS:
   - GTMSessionFetcher/Core (2.3.0)
   - image_picker_ios (0.0.1):
     - Flutter
-  - LBXZBarSDK (1.3.5)
   - MLImage (1.0.0-beta4)
   - MLKitBarcodeScanning (3.0.0):
     - MLKitCommon (~> 9.0)
@@ -60,7 +59,6 @@ PODS:
   - recognition_qrcode (0.0.1):
     - Flutter
     - GoogleMLKit/BarcodeScanning
-    - LBXZBarSDK
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -75,7 +73,6 @@ SPEC REPOS:
     - GoogleUtilities
     - GoogleUtilitiesComponents
     - GTMSessionFetcher
-    - LBXZBarSDK
     - MLImage
     - MLKitBarcodeScanning
     - MLKitCommon
@@ -100,14 +97,13 @@ SPEC CHECKSUMS:
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
-  LBXZBarSDK: db826d1265fbb4fbdbb2f30d7d1e96142e32bfff
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  recognition_qrcode: 1c22cd2fd9fe23d70818ff00d3322e56376c754a
+  recognition_qrcode: 60850a7149fa3a267c7e4086eb152bcb64767b76
 
 PODFILE CHECKSUM: cf0c950f7e9a456b4e325f5b8fc0f98906a3705a
 
