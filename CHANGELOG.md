@@ -64,3 +64,7 @@
 ## 2.0.6
 
 - TODO: 支持模拟器运行（Support simulator run.）
+
+## 2.0.6+1
+
+- TODO: 修改md示例
