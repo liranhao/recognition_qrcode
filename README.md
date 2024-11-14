@@ -18,7 +18,7 @@ dependencies:
 import 'package:recognition_qrcode/recognition_qrcode.dart';
 
 //如果使用默认配置可以不配置config
- RecognitionQrcode.config(
+ RecognitionManager.setConfig(
       // icon: "assets/bx-right-arrow.png", //箭头图标: 传路径
       iconWidth: 30, // 箭头图标大小
       iconHeight: 30,// 箭头图标大小
@@ -26,7 +26,7 @@ import 'package:recognition_qrcode/recognition_qrcode.dart';
       cancelTitle: "取消",// 右上角取消按钮文字
   );
 //参数 img: 支持base64、url、filePath三种方式
-RecognitionQrcode.recognition(
+RecognitionManager.recognition(
                         "https://tool.oschina.net/action/qrcode/generate?data=1231231231&output=image%2Fpng&error=L&type=0&margin=7&size=4.png").then((result) {
     print("recognition: $result");
   }).catchError((onError) {
