@@ -68,3 +68,7 @@
 ## 2.0.6+1
 
 - TODO: 修改md示例
+
+## 2.0.6+2
+
+- TODO: 删除Android中registerWith方法
