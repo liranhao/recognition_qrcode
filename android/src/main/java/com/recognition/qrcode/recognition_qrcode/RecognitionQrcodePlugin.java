@@ -5,13 +5,10 @@ import android.app.Activity;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.flutter.Log;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.MethodCall;
@@ -19,15 +16,10 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Base64;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -79,27 +71,6 @@ public class RecognitionQrcodePlugin implements FlutterPlugin, MethodCallHandler
     @Override
     public void onDetachedFromActivity() {
 
-    }
-
-    // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-    // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-    // plugin registration via this function while apps migrate to use the new Android APIs
-    // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
-    //
-    // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-    // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-    // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-    // in the same class.
-    public static void registerWith(Registrar registrar) {
-        if(registrar.activity() == null){
-            return;
-        }
-        RecognitionQrcodePlugin plugin = new RecognitionQrcodePlugin();
-        plugin.currentActivity = registrar.activity();
-
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), "recognition_qrcode");
-        channel.setMethodCallHandler(plugin);
-//        registrar.addActivityResultListener(new QrCodeActivityResultListener(currentResult));
     }
 
     @Override
